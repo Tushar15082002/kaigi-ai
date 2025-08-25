@@ -23,26 +23,35 @@ import {
 } from "@/components/ui/form";
 
 const formSchema = z.object({
+    name: z.string().min(1, {message: "Password is required" }),
     email: z.email(),
     password: z.string().min(4, {message: "Password is required" }),
-});
+    confirmPassword: z.string().min(4, {message: "Password is required" }),
+})
+.refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+})
 
-export const SignInView = () => {
+export const SignUpView = () => {
     const [pending, setPending] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues : {
+            name: "",
             email : "",
             password : "",
+            confirmPassword: "",
         },
     });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
         setError(null);
         setPending(true);
-        authClient.signIn.email({
+        authClient.signUp.email({
+            name: data.name,
             email: data.email,
             password: data.password,
             callbackURL: "/"
@@ -83,11 +92,29 @@ export const SignInView = () => {
                             <div className="flex flex-col gap-6">
                                 <div className="flex flex-col items-center text-center">
                                     <h1 className="font-bold text-2xl"> 
-                                        Welcome Back
+                                        Let&apos;s get started
                                     </h1>
                                     <p className="text-muted-foreground text-balance">
-                                        Log In to your account
+                                        Create your account
                                     </p>
+                                </div><div className="grid gap-3">
+                                    <FormField 
+                                        control={form.control}
+                                        name="name"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel>Name</FormLabel>
+                                                <FormControl>
+                                                    <Input 
+                                                        type="text"
+                                                        placeholder="New User"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                 </div>
                                 <div className="grid gap-3">
                                     <FormField 
@@ -127,6 +154,25 @@ export const SignInView = () => {
                                         )}
                                     />
                                 </div>
+                                <div className="grid gap-3">
+                                    <FormField 
+                                        control={form.control}
+                                        name="confirmPassword"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel>Confirm Password</FormLabel>
+                                                <FormControl>
+                                                    <Input 
+                                                        type="password"
+                                                        placeholder="********"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 {!!error && (
                                     <Alert className="bg-destructive/10 border-none">
                                         <OctagonAlertIcon className="h-4 w-4 !text-destructive"/>
@@ -138,7 +184,7 @@ export const SignInView = () => {
                                     type="submit"
                                     className="w-full"
                                 >
-                                    Sign In
+                                    Sign Up
                                 </Button>
                                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 
                                 after:top-1/2  after:z-0 after:flex after:items-center after:border-t">
