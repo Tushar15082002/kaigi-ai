@@ -33,13 +33,13 @@ export const AgentsView = () => {
                 totalPages={data.totalPages}
                 onPageChange={(page) => setFilters({ page })}
             />
-            data.items.length === 0 && (
+            {data.items.length === 0 && (
                 <EmptyState 
                     title="Create your first agent"
                     description="Create an agent to join your meetings. 
                     The agent will follow your instructions and can interact with participants during the call"
                 />
-            )
+            )}
         </div>
     );
 };

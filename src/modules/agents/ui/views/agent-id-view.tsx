@@ -68,7 +68,7 @@ export const AgentIdView = ({ agentId }: Props) => {
                     agentId={agentId}
                     agentName={data.name}
                     onEdit={() => {setUpdateAgentDialogOpen(true)}}
-                    onRemove={() => {handleRemoveAgent}}
+                    onRemove={handleRemoveAgent}
                 />
                 <div className="bg-white rounded-lg border">
                     <div className="px-4 py-5 gap-y-5 flex flex-col col-span-5">
