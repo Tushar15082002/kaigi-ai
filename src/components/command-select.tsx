@@ -36,6 +36,11 @@ export const CommandSelect = ({
     const [open, setOpen] = useState(false);
     const selectedOption = options.find((option) => option.value === value);
 
+    const handleOpenChange = (open: boolean) => {
+        onSearch?.("");
+        setOpen(open);
+    };
+
     return (
         <>
             <Button
@@ -46,6 +51,7 @@ export const CommandSelect = ({
                     !selectedOption && "text-muted-foreground",
                     className,
                 )}
+                onClick={() => setOpen(true)}
             >
                 <div>
                     {selectedOption?.children ?? placeholder}
@@ -55,7 +61,7 @@ export const CommandSelect = ({
             <CommandResponsiveDialog
                 shouldFilter={!onSearch}
                 open={open}
-                onOpenChange={setOpen}    
+                onOpenChange={handleOpenChange}    
             >
                 <CommandInput placeholder="Search..." onValueChange={onSearch} />
                 <CommandList>
@@ -68,7 +74,7 @@ export const CommandSelect = ({
                         <CommandItem
                             key={option.id}
                             onSelect={() => {
-                                onSelect(option.value)
+                                onSelect(option.value);
                                 setOpen(false);
                             }}
                         >
