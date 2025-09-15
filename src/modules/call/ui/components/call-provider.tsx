@@ -1,8 +1,9 @@
 "use client";
 
-import { authClient } from "@/lib/auth-client";
 import { Loader2Icon } from "lucide-react";
+
 import { CallConnect } from "./call-connect";
+import { authClient } from "@/lib/auth-client";
 import { generateAvatarUri } from "@/lib/avatar";
 
 interface Props {

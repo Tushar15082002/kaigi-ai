@@ -1,3 +1,5 @@
+"use client";
+
 import { Loader2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { 
@@ -42,7 +44,7 @@ export const CallConnect = ({
                 name: userName,
                 image: userImage,
             },
-            tokenProvider:generateToken,
+            tokenProvider: generateToken,
         });
 
         setClient(_client);
