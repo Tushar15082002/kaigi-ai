@@ -11,6 +11,7 @@ import { db } from "@/db";
 import { agents, meetings } from "@/db/schema";
 import { StreamVideo } from "@/lib/stream-video";
 import { and, eq, not } from "drizzle-orm";
+import { inngest } from "@/inngest/client";
 
 function verifySignatureWithSDK(body: string, signature: string): boolean {
     return StreamVideo.verifyWebhook(body, signature);
@@ -163,6 +164,14 @@ export async function POST(req: NextRequest) {
                 {status: 404}
             );
         }
+
+        await inngest.send({
+            name: "meetings/processing",
+            data: {
+                meetingId: updatedMeeting.id,
+                transcriptUrl: updatedMeeting.transcriptUrl,
+            },
+        }),
 
     } else if(eventType === "call.recording_ready") {
         const event = payload as CallRecordingReadyEvent;
