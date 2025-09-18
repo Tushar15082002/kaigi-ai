@@ -171,7 +171,7 @@ export async function POST(req: NextRequest) {
                 meetingId: updatedMeeting.id,
                 transcriptUrl: updatedMeeting.transcriptUrl,
             },
-        }),
+        });
 
     } else if(eventType === "call.recording_ready") {
         const event = payload as CallRecordingReadyEvent;
