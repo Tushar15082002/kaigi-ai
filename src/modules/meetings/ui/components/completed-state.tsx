@@ -16,10 +16,11 @@ import {
     TabsList, 
     TabsTrigger, 
 } from "@/components/ui/tabs";
+import { Trasnscript } from "./transcript";
+import { formatDuration } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { formatDuration } from "@/lib/utils";
 
 interface Props {
     data: MeetingGetOne;
@@ -80,6 +81,9 @@ export const CompletedState = ({ data }: Props) => {
                         <ScrollBar orientation="horizontal" />
                     </ScrollArea>
                 </div>
+                <TabsContent value="transcript" >
+                    <Trasnscript meetingId={data.id} />
+                </TabsContent>
                 <TabsContent value="recording" >
                     <div className="bg-white rounded-lg border px-4 py-5">
                         <video
