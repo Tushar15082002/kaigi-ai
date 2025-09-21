@@ -5,6 +5,7 @@ import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "driz
 
 import { db } from "@/db";
 import { generateAvatarUri } from "@/lib/avatar";
+import { StreamChat_ } from "@/lib/stream-chat";
 import { StreamVideo } from "@/lib/stream-video";
 import { agents, meetings, user } from "@/db/schema";
 import { MeetingStatus, StreamTranscriptItem } from "../types";
@@ -13,6 +14,16 @@ import { meetingsInsertSchema, meetingsUpdateSchema } from "../schema";
 import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 
 export const meetingsRouter = createTRPCRouter({
+    generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
+        const token = StreamChat_.createToken(ctx.auth.user.id);
+        await StreamChat_.upsertUser({
+            id: ctx.auth.user.id,
+            role: "admin",
+        });
+
+        return token;
+    }),
+    
     getTranscript: protectedProcedure
         .input(z.object({ id: z.string() }))
         .query(async ({ input, ctx }) => {
