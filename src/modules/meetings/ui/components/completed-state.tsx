@@ -21,6 +21,7 @@ import { formatDuration } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ChatProvider } from "./chat-provider";
 
 interface Props {
     data: MeetingGetOne;
@@ -81,6 +82,9 @@ export const CompletedState = ({ data }: Props) => {
                         <ScrollBar orientation="horizontal" />
                     </ScrollArea>
                 </div>
+                <TabsContent value="chat" >
+                    <ChatProvider meetingId={data.id} meetingName={data.name} />
+                </TabsContent>
                 <TabsContent value="transcript" >
                     <Trasnscript meetingId={data.id} />
                 </TabsContent>
