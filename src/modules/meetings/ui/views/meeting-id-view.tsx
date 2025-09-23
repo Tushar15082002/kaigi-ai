@@ -12,6 +12,7 @@ import { ActiveState } from "../components/active-state";
 import { LoadingState } from "@/components/loading-state";
 import { UpcomingState } from "../components/upcoming-state";
 import { CancelledState } from "../components/cancelled-state";
+import { CompletedState } from "../components/completed-state";
 import { ProcessingState } from "../components/processing-state";
 import { MeetingIdViewHeader } from "../components/meeting-id-view-header";
 import { UpdateMeetingDialog } from "../components/update-meeting-dialog";
@@ -83,7 +84,7 @@ export const MeetingIdView = ({ meetingId }: Props) => {
                     onCancelMeeting={() => {}}
                     isCancelling={false}
                 />}
-                {isCompleted && <div>Completed</div>}
+                {isCompleted && <CompletedState data={data} />}
                 {isProcessing && <ProcessingState />}
                 {isCancelled && <CancelledState />}
             </div>
