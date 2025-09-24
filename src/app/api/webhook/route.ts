@@ -288,7 +288,7 @@ export async function POST(req: NextRequest) {
                 variant: "botttsNeutral",
             });
 
-            StreamChat_.upsertUsers({
+            StreamChat_.upsertUser({
                 id: existingAgent.id,
                 name: existingAgent.name,
                 image: avatarUrl,
